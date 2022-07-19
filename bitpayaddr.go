@@ -32,7 +32,7 @@ func (e UnsupportedWitnessVerError) Error() string {
 type UnsupportedWitnessProgLenError int
 
 func (e UnsupportedWitnessProgLenError) Error() string {
-	return "unsupported witness program length: " + string(e)
+	return fmt.Sprintf("unsupported witness program length: %s", +e)
 }
 
 // encodeAddress returns a human-readable payment address given a ripemd160 hash
@@ -51,7 +51,7 @@ func encodeBitpayAddress(hash160 []byte, netID byte) string {
 // The bitcoin network the address is associated with is extracted if possible.
 // When the address does not encode the network, such as in the case of a raw
 // public key, the address will be associated with the passed defaultNet.
-func DecodeBitpay(addr string, defaultNet *chaincfg.Params) (btcutil.Address, error) {
+func DecodeBitpay(addr string, _ *chaincfg.Params) (btcutil.Address, error) {
 
 	// Switch on decoded length to determine the type.
 	decoded, netID, err := base58.CheckDecode(addr)
